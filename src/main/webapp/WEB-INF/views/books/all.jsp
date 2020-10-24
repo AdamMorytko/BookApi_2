@@ -5,10 +5,18 @@
     <title>Book List</title>
 </head>
 <body>
-<%--<form action="/books/">--%>
-<%--    <label for="product">Wpisz nazwę książki</label>--%>
-<%--    <input id="product" type="text" name="product"><input type="submit">--%>
-<%--</form>--%>
+<form action="/books/search">
+    <label for="bookTitle">Enter a book title</label><br>
+    <input id="bookTitle" type="text" name="bookTitle"><br>
+    <input type="submit" value="search">
+</form>
+<c:if test="${notFound}">Not found.</c:if><br>
+<c:if test="${search}">
+    <a href="${pageContext.request.contextPath}/books">Return to book list</a>
+</c:if><br>
+<br>
+<a href="${pageContext.request.contextPath}/books/add">Add a new book</a>
+<br>
 <table border="1">
     <thead>
     <th>isbn</th>
@@ -32,8 +40,6 @@
     </tbody>
     <br>
 </table>
-<br>
-<a href="${pageContext.request.contextPath}/books/add">Add a new book</a>
 </body>
 </html>
 

@@ -30,9 +30,9 @@
     <br>
     * - pole wymagane
     <br>
-    <input type="submit" value="Zapisz">
+    <input type="submit" value="Save">
 </form:form>
 <br>
-<a href="${pageContext.request.contextPath}/books">Powrót</a>
+<a href="${pageContext.request.contextPath}/books">Return to book list</a>
 </body>
 </html>

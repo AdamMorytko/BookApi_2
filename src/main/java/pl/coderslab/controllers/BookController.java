@@ -41,6 +41,20 @@ public class BookController {
         }
     }
 
+    @GetMapping("/search")
+    public String findBook(String bookTitle, Model model){
+        List<Book> foundBooks = bookService.findBooksByTitle(bookTitle);
+        if (foundBooks.size()>0){
+            model.addAttribute("books",foundBooks);
+            model.addAttribute("search",true);
+        }else {
+            List<Book> books = bookService.getBooks();
+            model.addAttribute("books", books);
+            model.addAttribute("notFound", true);
+        }
+        return "books/all";
+    }
+
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("book", new Book());

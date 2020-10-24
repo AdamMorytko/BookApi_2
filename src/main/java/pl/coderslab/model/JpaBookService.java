@@ -41,4 +41,9 @@ public class JpaBookService implements BookService {
     public void deleteBook(long id) {
         bookRepository.deleteById(id);
     }
+
+    @Override
+    public List<Book> findBooksByTitle(String bookTitle) {
+        return bookRepository.findAllByTitle(bookTitle);
+    }
 }
