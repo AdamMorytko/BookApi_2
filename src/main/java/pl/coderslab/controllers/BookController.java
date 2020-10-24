@@ -19,7 +19,7 @@ public class BookController {
     Logger logger = LoggerFactory.getLogger(BookController.class);
     private BookService bookService;
 
-    public BookController(BookService bookService){
+    public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
@@ -31,38 +31,73 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    Book getBook(@PathVariable long id){
+    public String getBook(@PathVariable long id, Model model) {
         Optional<Book> book = bookService.getBookById(id);
-        return book.orElse(null);
+        if (book.isPresent()) {
+            model.addAttribute("book", book.get());
+            return "books/details";
+        } else {
+            return "books/all";
+        }
     }
 
     @GetMapping("/add")
     public String showAddForm(Model model) {
-        model.addAttribute("book",new Book());
+        model.addAttribute("book", new Book());
         return "books/add";
     }
 
     @PostMapping("")
     public String addBook(@Valid Book book, BindingResult result) {
-        if (result.hasErrors()){
-            result.getAllErrors().forEach(r->logger.info(r.toString()));
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(r -> logger.info("New book form: " + r.toString()));
             return "books/add";
         }
         bookService.addBook(book);
-        logger.info("Created new book: "+book);
+        logger.info("Created new book: " + book);
         return "redirect:/books";
     }
 
-    @PutMapping("")
-    void updateBook(@RequestBody Book book) {
-        logger.info("Updating book: {} with {}",bookService.getBookById(book.getId()),book);
-        bookService.updateBook(book);
+    @GetMapping("/edit/{id}")
+    public String showUpdateBookForm(@PathVariable long id, Model model) {
+        Optional<Book> bookToUpdate = bookService.getBookById(id);
+        if (bookToUpdate.isPresent()) {
+            model.addAttribute("book", bookToUpdate.get());
+            return "books/add";
+        } else {
+            return "books/all";
+        }
     }
 
-    @DeleteMapping("/{id}")
-    void deleteBook(@PathVariable long id) {
-        logger.info("Deleting book: {}", bookService.getBookById(id));
-        bookService.deleteBook(id);
+    @PostMapping("/edit")
+    public String updateBook(@Valid Book book, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(r -> logger.info("Update form: " + r.toString()));
+            return "books/add";
+        }
+        bookService.updateBook(book);
+        model.addAttribute(book);
+        return "books/details";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String showDeleteConfirmation(@PathVariable long id, Model model) {
+        Optional<Book> bookToDelete = bookService.getBookById(id);
+        if (bookToDelete.isPresent()) {
+            model.addAttribute("id", id);
+            return "books/confirm";
+        } else {
+            return "books/all";
+        }
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteBook(@PathVariable long id) {
+        Optional<Book> bookToDelete = bookService.getBookById(id);
+        if (bookToDelete.isPresent()) {
+            bookService.deleteBook(id);
+        }
+        return "books/all";
     }
 
 
