@@ -8,6 +8,7 @@
         .inline {
             display: inline;
         }
+
         .link-button {
             background: none;
             border: none;
@@ -24,11 +25,10 @@ Are you sure to delete this book?
 <br>
 <form method="post" action="/books/delete/${id}" class="inline">
     <input type="hidden" name="id" value="${id}">
-    <button type="submit" class="link-button">
-        Confirm and delete
-    </button>
+    <button type="submit" class="link-button">Confirm and delete</button>
 </form>
 <br>
-<a href="/books">Cancel and return</a>
+<br>
+<a href="/books"> Cancel and return</a>
 </body>
 </html>

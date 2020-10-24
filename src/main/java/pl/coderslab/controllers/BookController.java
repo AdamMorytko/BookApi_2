@@ -37,7 +37,7 @@ public class BookController {
             model.addAttribute("book", book.get());
             return "books/details";
         } else {
-            return "books/all";
+            return "redirect:/books";
         }
     }
 
@@ -65,7 +65,7 @@ public class BookController {
             model.addAttribute("book", bookToUpdate.get());
             return "books/add";
         } else {
-            return "books/all";
+            return "redirect:/books";
         }
     }
 
@@ -87,7 +87,7 @@ public class BookController {
             model.addAttribute("id", id);
             return "books/confirm";
         } else {
-            return "books/all";
+            return "redirect:/books";
         }
     }
 
@@ -97,7 +97,7 @@ public class BookController {
         if (bookToDelete.isPresent()) {
             bookService.deleteBook(id);
         }
-        return "books/all";
+        return "redirect:/books";
     }
 
 

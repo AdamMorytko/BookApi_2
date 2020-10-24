@@ -10,14 +10,16 @@
     <th>isbn</th>
     <th>title</th>
     <th>author</th>
+    <th>publisher</th>
+    <th>type</th>
     <th>actions</th>
     </thead>
     <tbody>
         <tr>
             <td><c:out value="${book.isbn}"/></td>
             <td><c:out value="${book.title}"/></td>
+            <td><c:out value="${book.author}"/></td>
             <td><c:out value="${book.publisher}"/></td>
-            <td><c:out value="${book.title}"/></td>
             <td><c:out value="${book.type}"/></td>
             <td>
                 <a href="${pageContext.request.contextPath}/books/delete/${book.id}">delete</a> /
